@@ -48,6 +48,7 @@ q1, q2 = Queue(), Queue()
 options = {
     "path": "demo.png",
     "lang": ["ko", "en"],
+    "context": "",
     "tesseract": {
         # tesseract config
         "config": "--tessdata-dir ./tessdata"
@@ -60,9 +61,16 @@ Thread(target=wrapper, args=(job_tesseract_ocr, options, q2)).start()
 q1 = q1.get()
 q2 = q2.get()
 
+optional_context_prompt = (
+    f"[context]: {options['context']}" if options["context"] else ""
+)
+
 prompt = f"""Combine and correct OCR results [0] and [1], using \\n for line breaks. Remove unintended noise. Refer to the [context] keywords. Answer in the JSON format {{data:<output:string>}}:
 [0]: {q1}
-[1]: {q2}"""
+[1]: {q2}
+{optional_context_prompt}"""
+
+prompt = prompt.strip()
 
 print("=====")
 print(prompt)
@@ -71,11 +79,16 @@ client = OpenAI(
     api_key=os.environ["OPENAI_API_KEY"],
 )
 
+print("=====")
+
 completion = client.chat.completions.create(
     model="gpt-4",
     messages=[
         {"role": "user", "content": prompt},
     ],
 )
-result = extract_json(completion.choices[0].message.content)
+output = completion.choices[0].message.content
+print(output)
+
+result = extract_json(output)
 print(result)
