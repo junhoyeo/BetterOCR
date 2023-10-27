@@ -1,7 +1,12 @@
 from threading import Thread
 from queue import Queue
+import os
+
+from openai import OpenAI
 import easyocr
 import pytesseract
+
+from parsers import extract_json
 
 
 def job_easy_ocr(_options):
@@ -55,9 +60,22 @@ Thread(target=wrapper, args=(job_tesseract_ocr, options, q2)).start()
 q1 = q1.get()
 q2 = q2.get()
 
-prompt = f"""Combine and correct OCR results [0] and [1], using \\n for line breaks. Answer in the JSON format {{data:<output:string>}}:
+prompt = f"""Combine and correct OCR results [0] and [1], using \\n for line breaks. Remove unintended noise. Refer to the [context] keywords. Answer in the JSON format {{data:<output:string>}}:
 [0]: {q1}
 [1]: {q2}"""
 
 print("=====")
 print(prompt)
+
+client = OpenAI(
+    api_key=os.environ["OPENAI_API_KEY"],
+)
+
+completion = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "user", "content": prompt},
+    ],
+)
+result = extract_json(completion.choices[0].message.content)
+print(result)
