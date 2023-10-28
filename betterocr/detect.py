@@ -64,8 +64,11 @@ def detect_text(
     print("=====")
     print(prompt)
 
+    api_key = os.environ["OPENAI_API_KEY"]
+    if "API_KEY" in options["openai"] and options["openai"]["API_KEY"] != "":
+        api_key = options["openai"]["API_KEY"]
     client = OpenAI(
-        api_key=options["openai"]["API_KEY"] or os.environ["OPENAI_API_KEY"],
+        api_key=api_key,
     )
 
     print("=====")
