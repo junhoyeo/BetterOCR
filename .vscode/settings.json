@@ -19,6 +19,7 @@
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
   "pylint.args": [
+    "--disable=dangerous-default-value",
     "--disable=missing-module-docstring",
     "--disable=missing-class-docstring",
     "--disable=missing-function-docstring",
