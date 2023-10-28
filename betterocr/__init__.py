@@ -22,3 +22,5 @@ __all__ = [
     "job_tesseract",
     "extract_json",
 ]
+
+__author__ = "junhoyeo"

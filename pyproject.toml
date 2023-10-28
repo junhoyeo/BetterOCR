@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "betterocr"
+version = "1.0.0"
+description = "Better text detection by combining OCR engines with LLM."
+authors = ["Junho Yeo <i@junho.io>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openai = { version = "^1.0.0b3", allow-prereleases = true }
+pytesseract = "^0.3.10"
+easyocr = "^1.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
