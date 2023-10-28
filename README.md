@@ -17,7 +17,7 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 **BetterOCR** combines results from multiple OCR engines with an LLM to correct & reconstruct the output.
 
 - **🔍 OCR Engines**: Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) and [Tesseract](https://github.com/tesseract-ocr/tesseract).
-- **🧠 LLM**: Supports models from OpenAI.
+- **🧠 LLM**: Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
 - **📒 Custom Context**: Allows users to provide an optional context to use specific keywords such as proper nouns and product names. This assists in spelling correction and noise identification, ensuring accuracy even with rare or unconventional words.
 
 Head over to [💯 Examples](#-Examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
