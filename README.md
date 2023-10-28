@@ -40,13 +40,30 @@ import betterocr
 
 text = betterocr.detect_text(
     "demo.png",
-    ["ko", "en"],
-    context="",
-    tesseract={"config": "--tessdata-dir ./tessdata"},
-    openai={"model": "gpt-4"},
+    ["ko", "en"], # language codes (from EasyOCR)
+    context="", # (optional) context
+    tesseract={
+      # Tesseract options here
+      "config": "--tessdata-dir ./tessdata"
+    },
+    openai={
+      # OpenAI options here
+
+      # `os.environ["OPENAI_API_KEY"]` is used by default
+      "API_KEY": "sk-xxxxxxx",
+
+      # rest are used to pass params to `client.chat.completions.create`
+      # `{"model": "gpt-4"}` by default
+      "model": "gpt-3.5-turbo",
+    },
 )
 print(text)
 ```
+
+- `image_path` (`str`)
+- `lang` (`list[str]`): Use language codes from https://www.jaided.ai/easyocr, each represented as a string within the list.
+- `context` (`str`)
+- ...
 
 ## 💯 Examples
 
