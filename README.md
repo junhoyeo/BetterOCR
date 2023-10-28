@@ -1,6 +1,9 @@
-# Better OCR
+<p align="center">
+  <img src=".github/images/logo.png" width="256px" />
+</p>
+<h1 align="center">Better OCR</h1>
 
-<img src=".github/images/demo-0.webp" width="500px" />
+> 🔍 Better text detection by combining OCR engines with 🧠 LLM.
 
 | Source | Text |
 | ------ | ---- |
