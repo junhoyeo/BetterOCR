@@ -5,6 +5,11 @@
 </p>
 <h1 align="center">BetterOCR</h1>
 
+<p align="center">
+<a href="https://pypi.org/project/betterocr"><img alt="PyPI" src="https://img.shields.io/pypi/v/betterocr.svg?style=for-the-badge&labelColor=162246" /></a>
+<a href="https://github.com/junhoyeo/betterocr/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&labelColor=162246" /></a>
+<p>
+
 > 🔍 Better text detection by combining OCR engines with 🧠 LLM.
 
 OCR _still_ sucks! ... Especially when you're from the _other side_ of the world (and face a significant lack of training data in your language) — or just not thrilled with noisy results.
