@@ -7,6 +7,30 @@
 
 <img src=".github/images/arch.jpg" width="100%" />
 
+## 🚀 Usage (WIP)
+
+```bash
+pip install betterocr
+# pip3 install betterocr
+```
+
+```py
+import betterocr
+
+text = betterocr.detect_text(
+    "demo.png",
+    ["ko", "en"],
+    context="",
+    tesseract={"config": "--tessdata-dir ./tessdata"},
+    openai={"model": "gpt-4"},
+)
+print(text)
+```
+
+## Demo
+
+<img src=".github/images/demo-0.webp" width="500px" />
+
 | Source | Text |
 | ------ | ---- |
 | EasyOCR | `CHAINSAWMANChapter 109:The Easy Way to Stop Bullying~BV-THTSUKIFUUIMUTU ETT` |
