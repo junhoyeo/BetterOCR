@@ -65,7 +65,7 @@ def detect_text(
     print(prompt)
 
     client = OpenAI(
-        api_key=os.environ["OPENAI_API_KEY"],
+        api_key=options["openai"]["API_KEY"] or os.environ["OPENAI_API_KEY"],
     )
 
     print("=====")
