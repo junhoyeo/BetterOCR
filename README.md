@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/junhoyeo">
-    <img src=".github/images/logo.png" width="256px" />
+    <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/logo.png" width="256px" />
   </a>
 </p>
 <h1 align="center">BetterOCR</h1>
@@ -28,7 +28,7 @@ Coming Soon: improved interface, async support, box detection, and more.
 > This package is under rapid development 🛠
 
 <a href="https://github.com/junhoyeo">
-  <img src=".github/images/arch.jpg" width="100%" />
+  <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/arch.jpg" width="100%" />
 </a>
 
 > Architecture
@@ -77,7 +77,7 @@ print(text)
 
 ### Example 1 (English with Noise)
 
-<img src=".github/images/demo-0.webp" width="500px" />
+<img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-0.webp" width="500px" />
 
 | Source | Text |
 | ------ | ---- |
@@ -88,7 +88,7 @@ print(text)
 
 ### Example 2 (Korean+English)
 
-<img src=".github/images/demo-1.png" width="500px" />
+<img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-1.png" width="500px" />
 
 | Source | Text |
 | ------ | ---- |
@@ -99,7 +99,7 @@ print(text)
 
 ### Example 3 (Korean with custom `context`)
 
-<img src=".github/images/demo-2.png" width="400px" />
+<img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-2.png" width="400px" />
 
 | Source | Text |
 | ------ | ---- |
@@ -127,7 +127,7 @@ Based on the given OCR results and the context, here is the combined and correct
 
 ### Example 4 (Hindi)
 
-<img src="./.github/images/demo-3.webp" width="500px" />
+<img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-3.webp" width="500px" />
 
 | Source | Text |
 | ------ | ---- |
@@ -144,7 +144,7 @@ Based on the given OCR results and the context, here is the combined and correct
 
 <p align="center">
   <a href="https://github.com/junhoyeo">
-    <img src=".github/images/starmie.jpg" width="256px" />
+    <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/starmie.jpg" width="256px" />
   </a>
 </p>
 
