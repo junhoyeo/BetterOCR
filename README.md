@@ -5,6 +5,8 @@
 
 > 🔍 Better text detection by combining OCR engines with 🧠 LLM.
 
+<img src=".github/images/arch.jpg" width="100%" />
+
 | Source | Text |
 | ------ | ---- |
 | EasyOCR | `CHAINSAWMANChapter 109:The Easy Way to Stop Bullying~BV-THTSUKIFUUIMUTU ETT` |
