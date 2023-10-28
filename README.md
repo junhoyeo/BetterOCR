@@ -1,7 +1,7 @@
 <p align="center">
   <img src=".github/images/logo.png" width="256px" />
 </p>
-<h1 align="center">Better OCR</h1>
+<h1 align="center">BetterOCR</h1>
 
 > 🔍 Better text detection by combining OCR engines with 🧠 LLM.
 
