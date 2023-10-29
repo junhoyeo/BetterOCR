@@ -5,8 +5,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 from betterocr import detect_boxes
 
+image_path = ".github/images/demo-1.png"
 result = detect_boxes(
-    ".github/images/demo-1.png",
+    image_path,
     ["ko", "en"],
     context="퍼멘테이션 펩타인 아이케어 크림",  # product name
     tesseract={
@@ -15,11 +16,11 @@ result = detect_boxes(
 )
 print(result)
 
-fontpath = ".github/examples/Pretendard-Medium.ttf"
+font_path = ".github/examples/Pretendard-Medium.ttf"
 font_size = 36
-font = ImageFont.truetype(fontpath, size=font_size, encoding="unic")
+font = ImageFont.truetype(font_path, size=font_size, encoding="unic")
 
-img = cv2.imread(".github/images/demo-1.png")
+img = cv2.imread(image_path)
 img_rgb = cv2.cvtColor(
     img, cv2.COLOR_BGR2RGB
 )  # Convert from BGR to RGB for correct color display in matplotlib
@@ -55,6 +56,15 @@ for item in result:
     # Convert the PIL image back to an OpenCV image
     img_rgb = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
 
+
+height, width, _ = img.shape
+
+# Convert pixel dimensions to inches
+dpi = 80  # Assuming default matplotlib dpi
+fig_width = width / dpi
+fig_height = height / dpi
+
+plt.figure(figsize=(fig_width, fig_height))
 plt.imshow(img_rgb)
 plt.axis("off")
 plt.show()
