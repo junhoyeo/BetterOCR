@@ -3,11 +3,10 @@ import easyocr
 
 def job_easy_ocr(_options):
     reader = easyocr.Reader(_options["lang"])
-    result = reader.readtext(_options["path"], output_format="dict")
-    text = [item["text"] for item in result]
+    text = reader.readtext(_options["path"], detail=0)
     text = "".join(text)
     print("[*] job_easy_ocr", text)
-    return [text, result]
+    return text
 
 
 def job_easy_ocr_boxes(_options):
