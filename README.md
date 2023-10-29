@@ -22,7 +22,7 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 
 Head over to [💯 Examples](#-Examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
 
-Coming Soon: improved interface, async support, box detection, and more.
+Coming Soon: ~~box detection~~ ✅, improved interface, async support, and more.
 
 > **Warning**<br/>
 > This package is under rapid development 🛠
@@ -43,6 +43,7 @@ pip install betterocr
 ```py
 import betterocr
 
+# text detection
 text = betterocr.detect_text(
     "demo.png",
     ["ko", "en"], # language codes (from EasyOCR)
@@ -65,10 +66,26 @@ text = betterocr.detect_text(
 print(text)
 ```
 
-- `image_path` (`str`)
-- `lang` (`list[str]`): Use language codes from https://www.jaided.ai/easyocr, each represented as a string within the list.
-- `context` (`str`)
-- ...
+### Box Detection
+
+| Original | Detected |
+|:---:|:---:|
+| <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-1.png" width="500px" /> | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/boxes-0.png" width="500px" /> |
+
+```py
+import betterocr
+
+image_path = ".github/images/demo-1.png"
+items = betterocr.detect_boxes(
+    image_path,
+    ["ko", "en"],
+    context="퍼멘테이션 펩타인 아이케어 크림",  # product name
+    tesseract={
+        "config": "--psm 6 --tessdata-dir ./tessdata -c tessedit_create_boxfile=1"
+    },
+)
+print(items)
+```
 
 ## 💯 Examples
 
