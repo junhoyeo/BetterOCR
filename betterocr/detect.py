@@ -70,9 +70,14 @@ def detect_text(
     print("=====")
     print(prompt)
 
-    api_key = os.environ["OPENAI_API_KEY"]
-    if "API_KEY" in options["openai"] and options["openai"]["API_KEY"] != "":
-        api_key = options["openai"]["API_KEY"]
+    # Prioritize user-specified API_KEY
+    api_key = options["openai"].get("API_KEY", os.environ.get("OPENAI_API_KEY"))
+
+    # Make a shallow copy of the openai options and remove the API_KEY
+    openai_options = options["openai"].copy()
+    if "API_KEY" in openai_options:
+        del openai_options["API_KEY"]
+
     client = OpenAI(
         api_key=api_key,
     )
@@ -83,7 +88,7 @@ def detect_text(
         messages=[
             {"role": "user", "content": prompt},
         ],
-        **options["openai"],
+        **openai_options,
     )
     output = completion.choices[0].message.content
     print("[*] LLM", output)
@@ -147,9 +152,14 @@ def detect_boxes(
     print("=====")
     print(prompt)
 
-    api_key = os.environ["OPENAI_API_KEY"]
-    if "API_KEY" in options["openai"] and options["openai"]["API_KEY"] != "":
-        api_key = options["openai"]["API_KEY"]
+    # Prioritize user-specified API_KEY
+    api_key = options["openai"].get("API_KEY", os.environ.get("OPENAI_API_KEY"))
+
+    # Make a shallow copy of the openai options and remove the API_KEY
+    openai_options = options["openai"].copy()
+    if "API_KEY" in openai_options:
+        del openai_options["API_KEY"]
+
     client = OpenAI(
         api_key=api_key,
     )
@@ -160,7 +170,7 @@ def detect_boxes(
         messages=[
             {"role": "user", "content": prompt},
         ],
-        **options["openai"],
+        **openai_options,
     )
     output = completion.choices[0].message.content
     output = output.replace("\n", "")
