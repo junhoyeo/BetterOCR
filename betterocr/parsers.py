@@ -45,7 +45,7 @@ def extract_list(s):
                     for item in list_obj:
                         if "box" in item and "text" in item:
                             return list_obj
-                except json.decoder.JSONDecodeError as e:
+                except json.decoder.JSONDecodeError:
                     # Reset the stack and start position as this isn't a valid JSON
                     stack = []
                     start_position = None
