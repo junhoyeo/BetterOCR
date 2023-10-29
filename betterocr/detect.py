@@ -5,7 +5,7 @@ import os
 
 from openai import OpenAI
 
-from .parsers import extract_json
+from .parsers import extract_json, extract_list
 from .ocr_engines import (
     job_easy_ocr,
     job_easy_ocr_boxes,
@@ -164,8 +164,9 @@ def detect_boxes(
         **options["openai"],
     )
     output = completion.choices[0].message.content
+    output = output.replace("\n", "")
     print("[*] LLM (1)", output)
-    # return extract_list(output)
+    return extract_list(output)
 
 
 def detect_boxes_async():
