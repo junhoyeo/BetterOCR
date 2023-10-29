@@ -1,11 +1,17 @@
 from threading import Thread
+import json
 from queue import Queue
 import os
 
 from openai import OpenAI
 
-from .parsers import extract_json
-from .ocr_engines import job_easy_ocr, job_tesseract
+from .parsers import extract_json, extract_list, rectangle_corners
+from .ocr_engines import (
+    job_easy_ocr,
+    job_easy_ocr_boxes,
+    job_tesseract,
+    job_tesseract_boxes,
+)
 
 
 def wrapper(func, args, queue):
@@ -97,9 +103,84 @@ def detect_text_async():
     raise NotImplementedError
 
 
-def detect_boxes():
-    """Unimplemented"""
-    raise NotImplementedError
+def detect_boxes(
+    image_path: str,
+    lang: list[str],
+    context: str = "",
+    tesseract: dict = {},
+    openai: dict = {"model": "gpt-4"},
+):
+    q1, q2 = Queue(), Queue()
+    options = {
+        "path": image_path,  # "demo.png",
+        "lang": lang,  # ["ko", "en"]
+        "context": context,
+        "tesseract": tesseract,
+        "openai": openai,
+    }
+
+    Thread(target=wrapper, args=(job_easy_ocr_boxes, options, q1)).start()
+    Thread(target=wrapper, args=(job_tesseract_boxes, options, q2)).start()
+
+    boxes_1 = q1.get()
+    boxes_2 = q2.get()
+
+    optional_context_prompt = (
+        " " + "Please refer to the keywords and spelling in [context]"
+        if options["context"]
+        else ""
+    )
+    optional_context_prompt_data = (
+        f"[context]: {options['context']}" if options["context"] else ""
+    )
+
+    boxes_1_json = json.dumps(boxes_1, ensure_ascii=False, default=int)
+    boxes_2_json = json.dumps(boxes_2, ensure_ascii=False, default=int)
+
+    prompt = f"""Combine and correct OCR data [0] and [1]. Langauge is in {'+'.join(options['lang'])} (Avoid arbitrary translations). Remove unintended noise.{optional_context_prompt} Answer in the JSON format. Ensure coordinates are integers (round based on confidence if necessary) and output in the same JSON format (indent=0): Array({{box:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],text:str}}):
+    [0]: {boxes_1_json}
+    [1]: {boxes_2_json}
+    {optional_context_prompt_data}"""
+
+    prompt = prompt.strip()
+
+    print("=====")
+    print(prompt)
+
+    api_key = os.environ["OPENAI_API_KEY"]
+    if "API_KEY" in options["openai"] and options["openai"]["API_KEY"] != "":
+        api_key = options["openai"]["API_KEY"]
+    client = OpenAI(
+        api_key=api_key,
+    )
+
+    print("=====")
+
+    completion = client.chat.completions.create(
+        messages=[
+            {"role": "user", "content": prompt},
+        ],
+        **options["openai"],
+    )
+    output = completion.choices[0].message.content
+    output = output.replace("\n", "")
+    print("[*] LLM", output)
+
+    items = extract_list(output)
+
+    for idx, item in enumerate(items):
+        # [x,y,w,h]
+        if len(item) == 4 and isinstance(item[0], int):
+            rect = rectangle_corners(item["box"])
+            items[idx] = rect
+
+        # [[x,y],[w,h]]
+        elif len(item) == 2 and isinstance(item[0], list) and len(item[0]) == 2:
+            flattened = [i for sublist in item for i in sublist]
+            rect = rectangle_corners(flattened)
+            items[idx] = rect
+
+    return items
 
 
 def detect_boxes_async():

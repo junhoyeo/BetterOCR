@@ -22,7 +22,7 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 
 Head over to [💯 Examples](#-Examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
 
-Coming Soon: improved interface, async support, box detection, and more.
+Coming Soon: ~~box detection~~ ✅, improved interface, async support, and more.
 
 > **Warning**<br/>
 > This package is under rapid development 🛠
@@ -43,6 +43,7 @@ pip install betterocr
 ```py
 import betterocr
 
+# text detection
 text = betterocr.detect_text(
     "demo.png",
     ["ko", "en"], # language codes (from EasyOCR)
@@ -65,10 +66,44 @@ text = betterocr.detect_text(
 print(text)
 ```
 
-- `image_path` (`str`)
-- `lang` (`list[str]`): Use language codes from https://www.jaided.ai/easyocr, each represented as a string within the list.
-- `context` (`str`)
-- ...
+### 📦 Box Detection
+
+| Original | Detected |
+|:---:|:---:|
+| <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-1.png" width="500px" /> | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/boxes-0.png" width="500px" /> |
+
+```py
+import betterocr
+
+image_path = ".github/images/demo-1.png"
+items = betterocr.detect_boxes(
+    image_path,
+    ["ko", "en"],
+    context="퍼멘테이션 펩타인 아이케어 크림",  # product name
+    tesseract={
+        "config": "--psm 6 --tessdata-dir ./tessdata -c tessedit_create_boxfile=1"
+    },
+)
+print(items)
+```
+
+<details>
+  <summary>View Output</summary>
+
+```py
+[
+  {'text': 'JUST FOR YOU', 'box': [[543, 87], [1013, 87], [1013, 151], [543, 151]]},
+  {'text': '이런 분들께 추천드리는 퍼멘테이션 펩타인 아이케어 크림', 'box': [[240, 171], [1309, 171], [1309, 224], [240, 224]]},
+  {'text': '매일매일 진해지는 다크서클을 개선하고 싶다면', 'box': [[123, 345], [1166, 345], [1166, 396], [123, 396]]},
+  {'text': '축축 처지는 피부를 탄력 있게 바꾸고 싶다면', 'box': [[125, 409], [1242, 409], [1242, 470], [125, 470]]},
+  {'text': '나날이 늘어가는 눈가 주름을 완화하고 싶다면', 'box': [[123, 479], [1112, 479], [1112, 553], [123, 553]]},
+  {'text': 'FERMENATION', 'box': [[1216, 578], [1326, 578], [1326, 588], [1216, 588]]},
+  {'text': '민감성 피부에도 사용할 수 있는 아이크림을 찾는다면', 'box': [[134, 534], [1071, 534], [1071, 618], [134, 618]]},
+  {'text': '얇고 예민한 눈가 주변 피부를 관리하고 싶다면', 'box': [[173, 634], [1098, 634], [1098, 690], [173, 690]]}
+]
+```
+
+</details>
 
 ## 💯 Examples
 
