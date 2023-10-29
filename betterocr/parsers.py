@@ -53,3 +53,8 @@ def extract_list(s):
 
     # If no valid list found, return None
     return None
+
+
+def rectangle_corners(rect):
+    x, y, w, h = rect
+    return [[x, y], [x + w, y], [x + w, y + h], [x, y + h]]

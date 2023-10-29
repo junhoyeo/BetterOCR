@@ -5,7 +5,7 @@ import os
 
 from openai import OpenAI
 
-from .parsers import extract_json, extract_list
+from .parsers import extract_json, extract_list, rectangle_corners
 from .ocr_engines import (
     job_easy_ocr,
     job_easy_ocr_boxes,
@@ -165,7 +165,15 @@ def detect_boxes(
     output = completion.choices[0].message.content
     output = output.replace("\n", "")
     print("[*] LLM", output)
-    return extract_list(output)
+
+    items = extract_list(output)
+
+    for idx, item in enumerate(items):
+        if len(item) == 4 and isinstance(item[0], int):
+            rect = rectangle_corners(item["box"])
+            items[idx] = rect
+
+    return items
 
 
 def detect_boxes_async():
