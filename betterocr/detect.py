@@ -137,7 +137,7 @@ def detect_boxes(
     boxes_1_json = json.dumps(boxes_1, ensure_ascii=False, default=int)
     boxes_2_json = json.dumps(boxes_2, ensure_ascii=False, default=int)
 
-    prompt = f"""Combine and correct OCR data [0] and [1]. Langauge is in {'+'.join(options['lang'])} (Avoid arbitrary translations). Remove unintended noise.{optional_context_prompt} Answer in the JSON format. Ensure coordinates are integers (round based on confidence if necessary) and output in the same JSON format (indent=0): Array({{box:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],text:str}}):
+    prompt = f"""Combine and correct OCR data [0] and [1]. Include many items as possible. Langauge is in {'+'.join(options['lang'])} (Avoid arbitrary translations). Remove unintended noise.{optional_context_prompt} Answer in the JSON format. Ensure coordinates are integers (round based on confidence if necessary) and output in the same JSON format (indent=0): Array({{box:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],text:str}}):
     [0]: {boxes_1_json}
     [1]: {boxes_2_json}
     {optional_context_prompt_data}"""
