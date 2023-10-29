@@ -169,16 +169,18 @@ def detect_boxes(
     items = extract_list(output)
 
     for idx, item in enumerate(items):
+        box = item["box"]
+
         # [x,y,w,h]
-        if len(item) == 4 and isinstance(item[0], int):
-            rect = rectangle_corners(item["box"])
-            items[idx] = rect
+        if len(box) == 4 and isinstance(box[0], int):
+            rect = rectangle_corners(box)
+            items[idx]["box"] = rect
 
         # [[x,y],[w,h]]
-        elif len(item) == 2 and isinstance(item[0], list) and len(item[0]) == 2:
-            flattened = [i for sublist in item for i in sublist]
+        elif len(box) == 2 and isinstance(box[0], list) and len(box[0]) == 2:
+            flattened = [i for sublist in box for i in sublist]
             rect = rectangle_corners(flattened)
-            items[idx] = rect
+            items[idx]["box"] = rect
 
     return items
 
