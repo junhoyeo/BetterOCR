@@ -72,6 +72,8 @@ print(text)
 |:---:|:---:|
 | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/demo-1.png" width="500px" /> | <img src="https://github.com/junhoyeo/BetterOCR/raw/main/.github/images/boxes-0.png" width="500px" /> |
 
+Example Script: https://github.com/junhoyeo/BetterOCR/blob/main/examples/detect_boxes.py (Uses OpenCV and Matplotlib to draw rectangles)
+
 ```py
 import betterocr
 
