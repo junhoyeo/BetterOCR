@@ -6,10 +6,13 @@ authors = ["Junho Yeo <i@junho.io>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.13"
 openai = { version = "^1.0.0b3", allow-prereleases = true }
 pytesseract = "^0.3.10"
 easyocr = "^1.7.1"
+numpy = "^1.26.1"
+pandas = "^2.1.2"
+opencv-python = "^4.8.1.78"
 
 
 [build-system]
