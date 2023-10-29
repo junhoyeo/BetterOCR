@@ -110,7 +110,6 @@ def detect_boxes(
     tesseract: dict = {},
     openai: dict = {"model": "gpt-4"},
 ):
-    """Detect text from an image using EasyOCR and Tesseract, then combine and correct the results using OpenAI's LLM."""
     q1, q2 = Queue(), Queue()
     options = {
         "path": image_path,  # "demo.png",
@@ -138,7 +137,7 @@ def detect_boxes(
     boxes_1_json = json.dumps(boxes_1, ensure_ascii=False, default=int)
     boxes_2_json = json.dumps(boxes_2, ensure_ascii=False, default=int)
 
-    prompt = f"""Merge and correct OCR data [0] and [1]. Langauge is in {'+'.join(options['lang'])}. Remove unintended noise.{optional_context_prompt} Answer in the JSON format. Ensure coordinates are integers (round based on confidence if necessary) and output in JSON format (indent=0): Array({{box:[[int,int],[int,int],[int,int],[int,int]],text:str}}):
+    prompt = f"""Combine and correct OCR data [0] and [1]. Langauge is in {'+'.join(options['lang'])}. Remove unintended noise.{optional_context_prompt} Answer in the JSON format. Ensure coordinates are integers (round based on confidence if necessary) and output in JSON format (indent=0): Array({{box:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]],text:str}}):
     [0]: {boxes_1_json}
     [1]: {boxes_2_json}
     {optional_context_prompt_data}"""
@@ -165,7 +164,7 @@ def detect_boxes(
     )
     output = completion.choices[0].message.content
     output = output.replace("\n", "")
-    print("[*] LLM (1)", output)
+    print("[*] LLM", output)
     return extract_list(output)
 
 
