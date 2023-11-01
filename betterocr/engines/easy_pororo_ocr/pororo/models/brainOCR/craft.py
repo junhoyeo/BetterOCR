@@ -13,7 +13,6 @@ from ._modules import Vgg16BN, init_weights
 
 
 class DoubleConv(nn.Module):
-
     def __init__(self, in_ch: int, mid_ch: int, out_ch: int) -> None:
         super(DoubleConv, self).__init__()
         self.conv = nn.Sequential(
@@ -31,7 +30,6 @@ class DoubleConv(nn.Module):
 
 
 class CRAFT(nn.Module):
-
     def __init__(self, pretrained: bool = False, freeze: bool = False) -> None:
         super(CRAFT, self).__init__()
 

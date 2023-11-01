@@ -30,7 +30,6 @@ LOGGER = getLogger(__name__)
 
 
 class Reader(object):
-
     def __init__(
         self,
         lang: str,
@@ -79,7 +78,8 @@ class Reader(object):
     def build_vocab(character: str) -> List[str]:
         """Returns vocabulary (=list of characters)"""
         vocab = ["[blank]"] + list(
-            character)  # dummy '[blank]' token for CTCLoss (index 0)
+            character
+        )  # dummy '[blank]' token for CTCLoss (index 0)
         return vocab
 
     def detect(self, img: np.ndarray, opt2val: dict):
@@ -101,13 +101,12 @@ class Reader(object):
         min_size = opt2val["min_size"]
         if min_size:
             horizontal_list = [
-                i for i in horizontal_list
-                if max(i[1] - i[0], i[3] - i[2]) > min_size
+                i for i in horizontal_list if max(i[1] - i[0], i[3] - i[2]) > min_size
             ]
             free_list = [
-                i for i in free_list
-                if max(diff([c[0] for c in i]), diff([c[1]
-                                                      for c in i])) > min_size
+                i
+                for i in free_list
+                if max(diff([c[0] for c in i]), diff([c[1] for c in i])) > min_size
             ]
 
         return horizontal_list, free_list
@@ -147,8 +146,7 @@ class Reader(object):
                 (max_width, imgH),
                 interpolation=Image.LANCZOS,
             )
-            image_list = [([[0, 0], [x_max, 0], [x_max, y_max],
-                            [0, y_max]], crop_img)]
+            image_list = [([[0, 0], [x_max, 0], [x_max, y_max], [0, y_max]], crop_img)]
         else:
             image_list, max_width = get_image_list(
                 horizontal_list,

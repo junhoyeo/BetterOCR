@@ -6,7 +6,6 @@ from torch.utils.data import Dataset
 
 
 class RawDataset(Dataset):
-
     def __init__(self, root, imgW, imgH):
         self.imgW = imgW
         self.imgH = imgH

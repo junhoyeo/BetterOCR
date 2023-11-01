@@ -7,7 +7,6 @@ from tokenizers.normalizers import NFKC
 
 
 class CustomTokenizer(BaseTokenizer):
-
     def __init__(
         self,
         vocab: Union[str, List],
@@ -26,7 +25,8 @@ class CustomTokenizer(BaseTokenizer):
                     merges,
                     unk_token=unk_token,
                     fuse_unk=True,
-                ))
+                )
+            )
         else:
             n_model = "Unigram"
             tokenizer = Tokenizer(Unigram(vocab, 1))  # type: ignore

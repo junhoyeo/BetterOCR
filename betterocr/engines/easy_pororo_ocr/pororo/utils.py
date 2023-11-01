@@ -68,7 +68,7 @@ def control_temp(file_path: str):
     assert file_path.startswith("http"), "File path should contain `http` prefix !"
     # yapf: enable
 
-    ext = file_path[file_path.rfind("."):]
+    ext = file_path[file_path.rfind(".") :]
 
     with NamedTemporaryFile("wb", suffix=ext, delete=True) as f:
         response = get(file_path, allow_redirects=True)

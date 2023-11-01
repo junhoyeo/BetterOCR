@@ -38,7 +38,6 @@ def adjust_contrast_grey(img, target: float = 0.4):
 
 
 class NormalizePAD(object):
-
     def __init__(self, max_size, PAD_type: str = "right"):
         self.toTensor = transforms.ToTensor()
         self.max_size = max_size
@@ -52,17 +51,20 @@ class NormalizePAD(object):
         Pad_img = torch.FloatTensor(*self.max_size).fill_(0)
         Pad_img[:, :, :w] = img  # right pad
         if self.max_size[2] != w:  # add border Pad
-            Pad_img[:, :, w:] = (img[:, :, w - 1].unsqueeze(2).expand(
-                c,
-                h,
-                self.max_size[2] - w,
-            ))
+            Pad_img[:, :, w:] = (
+                img[:, :, w - 1]
+                .unsqueeze(2)
+                .expand(
+                    c,
+                    h,
+                    self.max_size[2] - w,
+                )
+            )
 
         return Pad_img
 
 
 class ListDataset(torch.utils.data.Dataset):
-
     def __init__(self, image_list: list):
         self.image_list = image_list
         self.nSamples = len(image_list)
@@ -76,7 +78,6 @@ class ListDataset(torch.utils.data.Dataset):
 
 
 class AlignCollate(object):
-
     def __init__(self, imgH: int, imgW: int, adjust_contrast: float):
         self.imgH = imgH
         self.imgW = imgW
@@ -132,8 +133,7 @@ def recognizer_predict(model, converter, test_loader, opt2val: dict):
             preds_prob = torch.from_numpy(preds_prob).float().to(device)
 
             # Select max probabilty (greedy decoding), then decode index to character
-            preds_lengths = torch.IntTensor([preds.size(1)] *
-                                            batch_size)  # (N,)
+            preds_lengths = torch.IntTensor([preds.size(1)] * batch_size)  # (N,)
             _, preds_indices = preds_prob.max(2)  # (N, length)
             preds_indices = preds_indices.view(-1)  # (N*length)
             preds_str = converter.decode_greedy(preds_indices, preds_lengths)
@@ -228,8 +228,7 @@ def get_text(image_list, recognizer, converter, opt2val: dict):
             collate_fn=AlignCollate_contrast,
             pin_memory=True,
         )
-        result2 = recognizer_predict(recognizer, converter, test_loader,
-                                     opt2val)
+        result2 = recognizer_predict(recognizer, converter, test_loader, opt2val)
 
     result = []
     for i, zipped in enumerate(zip(coord, result1)):

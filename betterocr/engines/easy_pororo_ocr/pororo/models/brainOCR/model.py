@@ -16,7 +16,6 @@ from .modules.transformation import TpsSpatialTransformerNetwork
 
 
 class Model(nn.Module):
-
     def __init__(self, opt2val: dict):
         super(Model, self).__init__()
 
@@ -55,7 +54,8 @@ class Model(nn.Module):
         )
         self.FeatureExtraction_output = output_channel  # int(imgH/16-1) * 512
         self.AdaptiveAvgPool = nn.AdaptiveAvgPool2d(
-            (None, 1))  # Transform final (imgH/16-1) -> 1
+            (None, 1)
+        )  # Transform final (imgH/16-1) -> 1
 
         # Sequence modeling
         if SequenceModeling == "BiLSTM":
@@ -98,10 +98,10 @@ class Model(nn.Module):
         x = self.Transformation(x)
 
         # Feature extraction stage
-        visual_feature = self.FeatureExtraction(
-            x)  # (b, output_channel=512, h=3, w)
-        visual_feature = self.AdaptiveAvgPool(visual_feature.permute(
-            0, 3, 1, 2))  # (b, w, channel=512, h=1)
+        visual_feature = self.FeatureExtraction(x)  # (b, output_channel=512, h=3, w)
+        visual_feature = self.AdaptiveAvgPool(
+            visual_feature.permute(0, 3, 1, 2)
+        )  # (b, w, channel=512, h=1)
         visual_feature = visual_feature.squeeze(3)  # (b, w, channel=512)
 
         # Sequence modeling stage
@@ -110,6 +110,7 @@ class Model(nn.Module):
 
         # Prediction stage
         prediction = self.Prediction(
-            contextual_feature.contiguous())  # (b, T, num_classes)
+            contextual_feature.contiguous()
+        )  # (b, T, num_classes)
 
         return prediction

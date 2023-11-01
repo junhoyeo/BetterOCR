@@ -6,7 +6,7 @@ import os
 from openai import OpenAI
 
 from .parsers import extract_json, extract_list, rectangle_corners
-from .ocr_wrappers import (
+from .wrappers import (
     job_easy_ocr,
     job_easy_pororo_ocr,
     job_easy_ocr_boxes,
