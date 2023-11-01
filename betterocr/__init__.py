@@ -7,7 +7,7 @@ from .detect import (
     detect_boxes_async,
     NoTextDetectedError,
 )
-from .ocr_engines import job_easy_ocr, job_tesseract
+from .ocr_wrappers import job_easy_ocr, job_tesseract
 from .parsers import extract_json
 
 __all__ = [
