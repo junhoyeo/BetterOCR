@@ -13,6 +13,7 @@ easyocr = "^1.7.1"
 numpy = "^1.26.1"
 pandas = "^2.1.2"
 opencv-python = "^4.8.1.78"
+wget = "^3.2"
 
 
 [tool.poetry.group.dev.dependencies]
