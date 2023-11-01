@@ -8,8 +8,6 @@ from openai import OpenAI
 from .parsers import extract_json, extract_list, rectangle_corners
 from .wrappers import (
     job_easy_ocr,
-    job_easy_pororo_ocr,
-    job_easy_pororo_ocr_boxes,
     job_easy_ocr_boxes,
     job_tesseract,
     job_tesseract_boxes,
@@ -35,6 +33,28 @@ def detect_async():
     raise NotImplementedError
 
 
+def get_jobs(boxes=False):
+    jobs = [
+        job_easy_ocr if not boxes else job_easy_ocr_boxes,
+        job_tesseract if not boxes else job_tesseract_boxes,
+    ]
+    try:
+        if not boxes:
+            from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr
+
+            jobs.append(job_easy_pororo_ocr)
+        else:
+            from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr_boxes
+
+            jobs.append(job_easy_pororo_ocr_boxes)
+    except ImportError:
+        print(
+            "[!] Pororo dependencies is not installed. Skipping Pororo (EasyPororoOCR)."
+        )
+        pass
+    return jobs
+
+
 def detect_text(
     image_path: str,
     lang: list[str],
@@ -43,12 +63,7 @@ def detect_text(
     openai: dict = {"model": "gpt-4"},
 ):
     """Detect text from an image using EasyOCR and Tesseract, then combine and correct the results using OpenAI's LLM."""
-    jobs = [
-        job_easy_ocr,
-        job_easy_pororo_ocr,
-        job_tesseract,
-    ]
-
+    jobs = get_jobs(boxes=False)
     options = {
         "path": image_path,  # "demo.png",
         "lang": lang,  # ["ko", "en"]
@@ -133,12 +148,7 @@ def detect_boxes(
     tesseract: dict = {},
     openai: dict = {"model": "gpt-4"},
 ):
-    jobs = [
-        job_easy_ocr_boxes,
-        job_easy_pororo_ocr_boxes,
-        job_tesseract_boxes,
-    ]
-
+    jobs = get_jobs(boxes=True)
     options = {
         "path": image_path,  # "demo.png",
         "lang": lang,  # ["ko", "en"]

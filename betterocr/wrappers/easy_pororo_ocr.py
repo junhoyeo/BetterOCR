@@ -14,14 +14,17 @@ def parse_languages(lang: list[str]):
 
 
 def default_ocr(_options):
-    print("default ocr")
     lang = parse_languages(_options["lang"])
     return EasyPororoOcr(lang)
 
 
 def job_easy_pororo_ocr(_options):
     image = load_with_filter(_options["path"])
-    ocr = _options.get("ocr", default_ocr(_options))
+
+    ocr = _options.get("ocr")
+    if not ocr:
+        ocr = default_ocr(_options)
+
     text = ocr.run_ocr(image, debug=False)
 
     if isinstance(text, list):
