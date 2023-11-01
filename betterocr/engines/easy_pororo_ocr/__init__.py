@@ -113,6 +113,7 @@ class EasyPororoOcr(BaseOcr):
         super().__init__()
         self._detector = Reader(lang_list=lang, gpu=gpu, **kwargs).detect
         self.detect_result = None
+        self.languages = lang
 
     def create_result(self, points):
         roi = crop(self.img, points)
@@ -124,7 +125,9 @@ class EasyPororoOcr(BaseOcr):
     def run_ocr(self, img_path: str, debug: bool = False, **kwargs):
         self.img_path = img_path
         self.img = cv2.imread(img_path) if isinstance(img_path, str) else self.img_path
-        self._ocr = Pororo(task="ocr", lang="ko", model="brainocr", **kwargs)
+
+        lang = "ko" if "ko" in self.languages else "en"
+        self._ocr = Pororo(task="ocr", lang=lang, model="brainocr", **kwargs)
 
         self.detect_result = self._detector(self.img, slope_ths=0.3, height_ths=1)
         if debug:

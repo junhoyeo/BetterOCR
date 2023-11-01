@@ -9,4 +9,5 @@ text = detect_text(
         "model": "gpt-3.5-turbo",
     },
 )
+print("\n")
 print(text)
