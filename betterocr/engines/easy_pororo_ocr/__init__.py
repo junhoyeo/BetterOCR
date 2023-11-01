@@ -154,6 +154,22 @@ class EasyPororoOcr(BaseOcr):
 
         return ocr_text
 
+    def get_boxes(self):
+        x, y = [0, 1]
+        ocr_result = self.ocr_result
+        description = 1
+        vertices = 0
+
+        items = []
+
+        for text_result in ocr_result:
+            text = text_result[description]
+            rect = text_result[vertices]
+            rect = [[round(point[x]), round(point[y])] for point in rect]
+            items.append({"box": rect, "text": text})
+
+        return items
+
 
 if __name__ == "__main__":
     # p_ocr = PororoOcr()

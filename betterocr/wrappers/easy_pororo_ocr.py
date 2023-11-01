@@ -1,19 +1,27 @@
 from ..engines.easy_pororo_ocr import EasyPororoOcr, load_with_filter
 
 
+def parse_languages(lang: list[str]):
+    languages = []
+    for l in lang:
+        if l in ["ko", "en"]:
+            languages.append(l)
+
+    if len(languages) == 0:
+        languages = ["ko"]
+
+    return languages
+
+
+def default_ocr(_options):
+    print("default ocr")
+    lang = parse_languages(_options["lang"])
+    return EasyPororoOcr(lang)
+
+
 def job_easy_pororo_ocr(_options):
     image = load_with_filter(_options["path"])
-    languages = _options["lang"]
-
-    lang = []
-    for l in languages:
-        if l in ["ko", "en"]:
-            lang.append(l)
-
-    if len(lang) == 0:
-        lang = ["ko"]
-
-    ocr = EasyPororoOcr(lang)
+    ocr = _options.get("ocr", default_ocr(_options))
     text = ocr.run_ocr(image, debug=False)
 
     if isinstance(text, list):
@@ -21,3 +29,9 @@ def job_easy_pororo_ocr(_options):
 
     print("[*] job_easy_pororo_ocr", text)
     return text
+
+
+def job_easy_pororo_ocr_boxes(_options):
+    ocr = default_ocr(_options)
+    job_easy_pororo_ocr({**_options, "ocr": ocr})
+    return ocr.get_boxes()
