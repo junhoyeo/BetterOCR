@@ -33,25 +33,27 @@ def detect_async():
     raise NotImplementedError
 
 
-def get_jobs(boxes=False):
+def get_jobs(languages: list[str], boxes=False):
     jobs = [
         job_easy_ocr if not boxes else job_easy_ocr_boxes,
         job_tesseract if not boxes else job_tesseract_boxes,
     ]
-    try:
-        if not boxes:
-            from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr
+    # ko or en in languages
+    if "ko" in languages or "en" in languages:
+        try:
+            if not boxes:
+                from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr
 
-            jobs.append(job_easy_pororo_ocr)
-        else:
-            from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr_boxes
+                jobs.append(job_easy_pororo_ocr)
+            else:
+                from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr_boxes
 
-            jobs.append(job_easy_pororo_ocr_boxes)
-    except ImportError:
-        print(
-            "[!] Pororo dependencies is not installed. Skipping Pororo (EasyPororoOCR)."
-        )
-        pass
+                jobs.append(job_easy_pororo_ocr_boxes)
+        except ImportError:
+            print(
+                "[!] Pororo dependencies is not installed. Skipping Pororo (EasyPororoOCR)."
+            )
+            pass
     return jobs
 
 
@@ -63,7 +65,6 @@ def detect_text(
     openai: dict = {"model": "gpt-4"},
 ):
     """Detect text from an image using EasyOCR and Tesseract, then combine and correct the results using OpenAI's LLM."""
-    jobs = get_jobs(boxes=False)
     options = {
         "path": image_path,  # "demo.png",
         "lang": lang,  # ["ko", "en"]
@@ -71,6 +72,7 @@ def detect_text(
         "tesseract": tesseract,
         "openai": openai,
     }
+    jobs = get_jobs(languages=options["lang"], boxes=False)
 
     queues = []
     for job in jobs:
@@ -148,7 +150,6 @@ def detect_boxes(
     tesseract: dict = {},
     openai: dict = {"model": "gpt-4"},
 ):
-    jobs = get_jobs(boxes=True)
     options = {
         "path": image_path,  # "demo.png",
         "lang": lang,  # ["ko", "en"]
@@ -156,6 +157,7 @@ def detect_boxes(
         "tesseract": tesseract,
         "openai": openai,
     }
+    jobs = get_jobs(languages=options["lang"], boxes=True)
 
     queues = []
     for job in jobs:
