@@ -42,7 +42,12 @@ def detect_text(
     openai: dict = {"model": "gpt-4"},
 ):
     """Detect text from an image using EasyOCR and Tesseract, then combine and correct the results using OpenAI's LLM."""
-    q1, q2, q3 = Queue(), Queue(), Queue()
+    jobs = [
+        job_easy_ocr,
+        job_easy_pororo_ocr,
+        job_tesseract,
+    ]
+
     options = {
         "path": image_path,  # "demo.png",
         "lang": lang,  # ["ko", "en"]
@@ -51,23 +56,31 @@ def detect_text(
         "openai": openai,
     }
 
-    Thread(target=wrapper, args=(job_easy_pororo_ocr, options, q1)).start()
-    Thread(target=wrapper, args=(job_easy_ocr, options, q2)).start()
-    Thread(target=wrapper, args=(job_tesseract, options, q3)).start()
+    queues = []
+    for job in jobs:
+        queue = Queue()
+        Thread(target=wrapper, args=(job, options, queue)).start()
+        queues.append(queue)
 
-    q1 = q1.get()
-    q2 = q2.get()
-    q3 = q3.get()
+    results = [queue.get() for queue in queues]
+
+    result_indexes_prompt = ""  # "[0][1][2]"
+    result_prompt = ""  # "[0]: result_0\n[1]: result_1\n[2]: result_2"
+
+    for i in range(len(results)):
+        result_indexes_prompt += f"[{i}]"
+        result_prompt += f"[{i}]: {results[i]}"
+
+        if i != len(results) - 1:
+            result_prompt += "\n"
 
     optional_context_prompt = (
         f"[context]: {options['context']}" if options["context"] else ""
     )
 
-    prompt = f"""Combine and correct OCR results [0], [1], and [2], using \\n for line breaks. Langauge is in {'+'.join(options['lang'])}. Remove unintended noise. Refer to the [context] keywords. Answer in the JSON format {{data:<output:string>}}:
-    [0]: {q1}
-    [1]: {q2}
-    [2]: {q3}
-    {optional_context_prompt}"""
+    prompt = f"""Combine and correct OCR results {result_indexes_prompt}, using \\n for line breaks. Langauge is in {'+'.join(options['lang'])}. Remove unintended noise. Refer to the [context] keywords. Answer in the JSON format {{data:<output:string>}}:
+{result_prompt}
+{optional_context_prompt}"""
 
     prompt = prompt.strip()
 
