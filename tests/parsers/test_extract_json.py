@@ -23,6 +23,9 @@ def test_extract_json__newlines():
     assert is_same_dict(
         extract_json('{"data": "hello\nworld"}'), {"data": "hello\nworld"}
     )
+    assert is_same_dict(
+        extract_json('{"data": "hello \n\n world"}'), {"data": "hello \n\n world"}
+    )
 
 
 def test_extract_json__newlines_escaped():
