@@ -19,6 +19,7 @@ wget = "^3.2"
 [tool.poetry.group.dev.dependencies]
 matplotlib = "^3.8.0"
 pillow = "^10.1.0"
+pytest = "^7.4.3"
 
 [build-system]
 requires = ["poetry-core"]
