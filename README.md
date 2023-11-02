@@ -21,7 +21,7 @@ Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [T
 
 - For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo <br />
   (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with Pororo).
-- Pororo is used only if the language options (`lang`) specified include either 🇺🇸 English (`en`) or 🇰🇷 Korean (`ko`). Also additional dependencies listed in [`[tool.poetry.group.pororo.dependencies]`] (https://github.com/junhoyeo/BetterOCR/blob/main/pyproject.toml#L22) should be available. (If not, it'll automatically be excluded from enabled engines.)
+- Pororo is used only if the language options (`lang`) specified include either 🇺🇸 English (`en`) or 🇰🇷 Korean (`ko`). Also additional dependencies listed in <a href="https://github.com/junhoyeo/BetterOCR/blob/main/pyproject.toml#L22"><code>[tool.poetry.group.pororo.dependencies]</code></a> should be available. (If not, it'll automatically be excluded from enabled engines.)
 
 ### 🧠 LLM
 Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
