@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "betterocr"
-version = "1.1.2"
+version = "1.2.0"
 description = "Better text detection by combining OCR engines with LLM."
 authors = ["Junho Yeo <i@junho.io>"]
 readme = "README.md"
