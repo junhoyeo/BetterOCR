@@ -49,7 +49,8 @@ def get_jobs(languages: list[str], boxes=False):
                 from .wrappers.easy_pororo_ocr import job_easy_pororo_ocr_boxes
 
                 jobs.append(job_easy_pororo_ocr_boxes)
-        except ImportError:
+        except ImportError as e:
+            print(e)
             print(
                 "[!] Pororo dependencies is not installed. Skipping Pororo (EasyPororoOCR)."
             )

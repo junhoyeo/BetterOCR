@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 from .pororo import Pororo
 from .utils.image_util import plt_imshow, put_text
 from .utils.image_convert import convert_coord, crop
-from .utils.pre_processing import roi_filter
+from .utils.pre_processing import load_with_filter, roi_filter
 from easyocr import Reader
 import warnings
 
@@ -124,3 +124,6 @@ class EasyPororoOcr(BaseOcr):
             items.append({"box": rect, "text": text})
 
         return items
+
+
+__all__ = ["EasyPororoOcr", "load_with_filter"]
