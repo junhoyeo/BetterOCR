@@ -17,7 +17,7 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 **BetterOCR** combines results from multiple OCR engines with an LLM to correct & reconstruct the output.
 
 - **🔍 OCR Engines**: Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [Tesseract](https://github.com/tesseract-ocr/tesseract) (Google), and [Pororo](https://github.com/kakaobrain/pororo) (KakaoBrain).
-  - For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with Pororo).
+  - For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with Pororo). Pororo is used only if the language options (lang) specified include either English (en) 🇺🇸 or Korean (ko) 🇰🇷.
 - **🧠 LLM**: Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
 - **📒 Custom Context**: Allows users to provide an optional context to use specific keywords such as proper nouns and product names. This assists in spelling correction and noise identification, ensuring accuracy even with rare or unconventional words.
 
