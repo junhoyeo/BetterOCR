@@ -16,16 +16,23 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 
 **BetterOCR** combines results from multiple OCR engines with an LLM to correct & reconstruct the output.
 
-- **🔍 OCR Engines**: Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [Tesseract](https://github.com/tesseract-ocr/tesseract) (Google), and [Pororo](https://github.com/kakaobrain/pororo) (KakaoBrain).
-  - For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo <br />
-    (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with Pororo).
-  - Pororo is used only if the language options (`lang`) specified include either 🇺🇸 English (`en`) or 🇰🇷 Korean (`ko`). Also additional dependencies listed in [`[tool.poetry.group.pororo.dependencies]`](https://github.com/junhoyeo/BetterOCR/blob/main/pyproject.toml#L22) should be available. (If not, it'll automatically be excluded from enabled engines.)
-- **🧠 LLM**: Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
-- **📒 Custom Context**: Allows users to provide an optional context to use specific keywords such as proper nouns and product names. This assists in spelling correction and noise identification, ensuring accuracy even with rare or unconventional words.
-
 Head over to [💯 Examples](#-Examples) to view performace by languages (🇺🇸, 🇰🇷, 🇮🇳).
 
-Coming Soon: ~~box detection~~ ✅, improved interface, async support, and more.
+Coming Soon: ~~box detection~~ ✅, improved interface 🚧, async support, and more. Contributions are welcomed.
+
+### **🔍 OCR Engines**
+Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [Tesseract](https://github.com/tesseract-ocr/tesseract) (Google), and [Pororo](https://github.com/kakaobrain/pororo) (KakaoBrain).
+
+- For Pororo, we're using the code from https://github.com/black7375/korean_ocr_using_pororo <br />
+  (Pre-processing ➡️ _Text detection_ with EasyOCR ➡️ _Text recognition_ with Pororo).
+- Pororo is used only if the language options (`lang`) specified include either 🇺🇸 English (`en`) or 🇰🇷 Korean (`ko`).
+- Also additional dependencies listed in [`[tool.poetry.group.pororo.dependencies]`] (https://github.com/junhoyeo/BetterOCR/blob/main/pyproject.toml#L22) should be available. (If not, it'll automatically be excluded from enabled engines.)
+
+### **🧠 LLM**
+Supports [Chat models](https://github.com/openai/openai-python#chat-completions) from OpenAI.
+
+### **📒 Custom Context**
+Allows users to provide an optional context to use specific keywords such as proper nouns and product names. This assists in spelling correction and noise identification, ensuring accuracy even with rare or unconventional words.
 
 > **Warning**<br/>
 > This package is under rapid development 🛠
