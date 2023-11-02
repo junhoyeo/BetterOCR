@@ -8,10 +8,9 @@ Apache License 2.0 @black7375
 import cv2
 from abc import ABC, abstractmethod
 from .pororo import Pororo
-from .pororo.pororo import SUPPORTED_TASKS
 from .utils.image_util import plt_imshow, put_text
 from .utils.image_convert import convert_coord, crop
-from .utils.pre_processing import load_with_filter, roi_filter
+from .utils.pre_processing import roi_filter
 from easyocr import Reader
 import warnings
 
@@ -62,57 +61,6 @@ class BaseOcr(ABC):
     @abstractmethod
     def run_ocr(self, img_path: str, debug: bool = False):
         pass
-
-
-class PororoOcr(BaseOcr):
-    def __init__(self, model: str = "brainocr", lang: str = "ko", **kwargs):
-        super().__init__()
-        self._ocr = Pororo(task="ocr", lang=lang, model=model, **kwargs)
-
-    def run_ocr(self, img_path: str, debug: bool = False):
-        self.img_path = img_path
-        self.ocr_result = self._ocr(img_path, detail=True)
-
-        if self.ocr_result["description"]:
-            ocr_text = self.ocr_result["description"]
-        else:
-            ocr_text = "No text detected."
-
-        if debug:
-            self.show_img_with_ocr(
-                "bounding_poly", "description", "vertices", ["x", "y"]
-            )
-
-        return ocr_text
-
-    @staticmethod
-    def get_available_langs():
-        return SUPPORTED_TASKS["ocr"].get_available_langs()
-
-    @staticmethod
-    def get_available_models():
-        return SUPPORTED_TASKS["ocr"].get_available_models()
-
-
-# https://www.jaided.ai/easyocr/documentation/
-class EasyOcr(BaseOcr):
-    def __init__(self, lang: list[str] = ["ko", "en"], gpu=True, **kwargs):
-        super().__init__()
-        self._ocr = Reader(lang_list=lang, gpu=gpu, **kwargs).readtext
-
-    def run_ocr(self, img_path: str, debug: bool = False):
-        self.img_path = img_path
-        self.ocr_result = self._ocr(img_path, detail=1)
-
-        if len(self.ocr_result) != 0:
-            ocr_text = list(map(lambda result: result[1], self.ocr_result))
-        else:
-            ocr_text = "No text detected."
-
-        if debug:
-            self.show_img_with_ocr(None, 1, 0, [0, 1])
-
-        return ocr_text
 
 
 class EasyPororoOcr(BaseOcr):
@@ -176,19 +124,3 @@ class EasyPororoOcr(BaseOcr):
             items.append({"box": rect, "text": text})
 
         return items
-
-
-if __name__ == "__main__":
-    # p_ocr = PororoOcr()
-    # e_ocr = EasyOcr()
-    m_ocr = EasyPororoOcr()
-    image_path = input("Enter image path: ")
-
-    image = load_with_filter(image_path)
-
-    # text = p_ocr.run_ocr(image, debug=True)
-    # print('Pororo:', text)
-    # text = e_ocr.run_ocr(image, debug=True)
-    # print('EasyOCR:', text)
-    text = m_ocr.run_ocr(image, debug=True)
-    print("EasyPororoOCR:", text)

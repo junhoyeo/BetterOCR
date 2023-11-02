@@ -23,6 +23,7 @@ pytest = "^7.4.3"
 torch = "^2.1.0"
 torchvision = "^0.16.0"
 wget = "^3.2"
+scikit-image = "^0.22.0"
 
 [build-system]
 requires = ["poetry-core"]
