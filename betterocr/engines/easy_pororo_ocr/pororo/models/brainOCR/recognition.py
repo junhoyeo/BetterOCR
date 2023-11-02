@@ -1,4 +1,11 @@
 """
+this code is adapted from https://github.com/black7375/korean_ocr_using_pororo
+
+Apache License 2.0 @yunwoong7
+Apache License 2.0 @black7375
+"""
+
+"""
 This code is adapted from https://github.com/JaidedAI/EasyOCR/blob/8af936ba1b2f3c230968dc1022d0cd3e9ca1efbb/easyocr/recognition.py
 """
 
