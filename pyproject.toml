@@ -7,17 +7,17 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
-openai = { version = "^1.0.0b3", allow-prereleases = true }
+openai = { version = "^1.28.1", allow-prereleases = true }
 pytesseract = "^0.3.10"
 easyocr = "^1.7.1"
-numpy = "^1.26.1"
-pandas = "^2.1.2"
-opencv-python = "^4.8.1.78"
+numpy = "^1.26.4"
+pandas = "^2.2.2"
+opencv-python = "^4.9.0.80"
 
 [tool.poetry.group.dev.dependencies]
-matplotlib = "^3.8.0"
-pillow = "^10.1.0"
-pytest = "^7.4.3"
+matplotlib = "^3.8.4"
+pillow = "^10.3.0"
+pytest = "^8.2.0"
 
 [tool.poetry.group.pororo.dependencies]
 torch = "^2.1.0"
