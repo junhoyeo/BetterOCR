@@ -16,6 +16,12 @@ OCR _still_ sucks! ... Especially when you're from the _other side_ of the world
 
 **BetterOCR** combines results from multiple OCR engines with an LLM to correct & reconstruct the output.
 
+<p align="center">
+  <img src="https://github.githubassets.com/assets/public-sponsor-default-9fa68986b057.png" width="64px" /><br />
+  <strong><a href="https://github.com/sponsors/junhoyeo">My open source work is supported by the community</a></strong><br />
+  Special thanks to <a href="https://www.korgiftcard.io/">(주)한국모바일상품권(Korea Mobile Git Card, Inc.)</a> and others
+</p>
+
 ### 🔍 OCR Engines
 Currently supports [EasyOCR](https://github.com/JaidedAI/EasyOCR) (JaidedAI), [Tesseract](https://github.com/tesseract-ocr/tesseract) (Google), and [Pororo](https://github.com/kakaobrain/pororo) (KakaoBrain).
 
